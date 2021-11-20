@@ -1,0 +1,31 @@
+{% extends 'pizza/base.html' %}
+
+{% block title %}Пиццерия у Вадима{% endblock %}
+
+{% block body %}
+    {% if request.user.is_authenticated %}
+        <p><a href="{% url 'pizza:make_pizza' %}">Создать новый рецепт пиццы</a></p>
+        <p><a href="{% url 'pizza:make_topping' %}">Создать новый ингредиент</a></p>
+    {% endif %}
+
+    <br>
+    <p>Список пицц:</p>
+    <ul>
+    {% for pizza in pizza %}
+        <li><a href="{% url 'pizza:pizza' pizza.slug %}"> {{ pizza }} </a></li>
+    {% endfor %}
+    </ul>
+
+    <br>
+    <form style="border: thick double #32a1ce; width: 300px;" action="{% url 'pizza:topping_filter' %}" method="GET">
+        <p>Поиск пицц по ингредиенту</p>
+        <label for="topping">Ингредиент:</label>
+        <select id="topping" name="topping_name" style="min-width: 100px">
+            {% for topping in toppings %}
+                <option>{{topping}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="submit" value="Поиск">
+    </form>
+{% endblock %}

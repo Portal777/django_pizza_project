@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+</head>
+<body>
+
+    <div style="border: 4px double black; width: 300px">
+        <p><a href="{% url 'pizza:index' %}">На главную</a></p>
+    {% if request.user.is_authenticated %}
+        <p>{{user}}: <a href="{% url 'logout' %}?next={{request.path}}">Выйти</a></p>
+    {% else %}
+        <p><a href="{% url 'login' %}">Войти</a></p>
+    {% endif %}
+    </div>
+    <br>
+    {% block body %} {% endblock %}
+</body>
+</html>

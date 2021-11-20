@@ -1,0 +1,29 @@
+{% extends 'pizza/base.html' %}
+
+{% block title %} Поиск по топпингам {% endblock %}
+
+{% block body %}
+    <form style="border: thick double #32a1ce; width: 300px;" action="{% url 'pizza:topping_filter' %}" method="GET">
+        <p>Поиск пицц по ингредиенту</p>
+        <label for="topping">Ингредиент:</label>
+        <select id="topping" name="topping_name" style="min-width: 100px">
+            {% for topping in toppings %}
+                <option>{{topping}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="submit" value="Поиск">
+    </form>
+    <br>
+    {% if pizzas %}
+        <p style="font-weight: bold;">Пиццы с ингредиентом: {{topping}}</p>
+        <ul>
+            {% for pizza in pizzas %}
+            <li><a href="{% url 'pizza:pizza' pizza.slug %}"> {{ pizza }} </a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Пицц с данным топпингом не найдено</p>
+    {% endif %}
+
+{% endblock %}

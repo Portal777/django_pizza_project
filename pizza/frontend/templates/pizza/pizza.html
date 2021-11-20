@@ -1,0 +1,23 @@
+{% extends 'pizza/base.html' %}
+
+{% block title %} {{pizza.title}} {% endblock %}
+
+{% block body %}
+  <div>
+    {% if pizza_image %}
+    <img src="{{ pizza_image.url }}" style="max-width: 300px">
+    {% endif %}
+    <p>Название: {{pizza_name}}</p>
+    <p>Состав:</p>
+    <ul>
+      {% if toppings  %}
+        {% for topping in toppings %}
+        <li><a href="{% url 'pizza:topping_filter' %}?topping_name={{topping}}" methods="GET">{{topping}}</a></li>
+        {% endfor %}
+      {% else %}
+        <p>Ингредиенты отсутствуют</p>
+      {% endif %}
+    </ul>
+    <p>Автор: {{author}}</p>
+  </div>
+{% endblock %}
